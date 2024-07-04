@@ -1,0 +1,260 @@
+* migration -> Model 構築完了後、Tinker を使ってターミナルでデータベース内容構築
+  (ドットインストールはブログ用の内容なので天気用のターミナルコード)
+
+TinkerはLaravelのコンソールREPL（Read-Eval-Print Loop）で、データベースと対話するために非常に便利です。以下は、Tinkerを使用してデータベース操作を行う方法のステップです。
+
+ドットインストールで使用しているコードの各部分について説明します。[[ブログ用]](下記に天気ver.あり)
+
+### 1. Tinkerの起動
+Tinkerを使用してデータベース操作を行うための最初のステップは、Tinkerを起動することです。
+./vendor/bin/sail tinker
+
+
+これは、LaravelのREPL（Read-Eval-Print Loop）を起動するコマンドです。Tinkerを使用することで、対話的にLaravelアプリケーションとデータベースを操作できます。
+
+### 2. 新しいPostモデルのインスタンス作成
+次に、`Post`モデルの新しいインスタンスを作成します。
+$post = new App\Models\Post;
+
+
+このコマンドは、`Post`モデルの新しいインスタンスを作成し、それを`$post`変数に格納します。
+
+### 3. プロパティの設定
+新しいインスタンスのプロパティを設定します。
+$post->title = 'Title 1';
+
+
+このコマンドは、`$post`インスタンスの`title`プロパティに`'Title 1'`を設定します。同様に、`body`プロパティも設定します。
+
+$post->body = 'Body 1';
+
+### 4. データベースに保存
+インスタンスをデータベースに保存します。
+$post->save();
+
+このコマンドは、`$post`インスタンスをデータベースに保存します。これにより、新しいレコードが`posts`テーブルに追加されます。
+
+### 5. Tinkerの終了
+Tinkerセッションを終了します。
+exit;
+
+
+これにより、Tinkerのセッションが終了し、通常のターミナルプロンプトに戻ります。
+
+### 具体的な例
+ドットインストールの内容を基にした具体的な例を以下に示します。
+
+#### 新しいPostモデルのインスタンス作成
+$post = new App\Models\Post;
+
+#### プロパティの設定
+$post->title = 'Title 1';
+post->body = 'Body 1';
+
+#### データベースに保存
+$post->save();
+
+
+#### Tinkerの終了
+exit;
+
+
+
+
+ERROR : Tinkerでの操作で構文エラーが発生しています。これは、入力中に誤って複数のプロパティ設定を一行に書いてしまったためです。各プロパティ設定は個別に、一行ずつ入力する必要があります。
+
+######### Weatherモデルを使用した例
+ドットインストールの例に倣い、Weatherモデルを使用して天気データを操作する方法を示します。
+
+#### 新しいWeatherモデルのインスタンス作成
+$weather = new App\Models\Weather;
+
+
+#### プロパティの設定
+$weather = new App\Models\Weather();
+$weather->location = 'Fukuoka';
+$weather->date = '2024-06-27';
+$weather->weather = 'Rainy';
+$weather->temperature = '28°C';
+$weather->humidity = '60%';
+$weather->wind = '10 km/h';
+$weather->clothes = 'Light Jacket';
+
+#### データベースに保存
+$weather->save();
+
+
+#### Tinkerの終了
+exit;
+
+#### テーブルができているか確かめる
+./vendor/bin/sail mysql mybbs
+
+#### レコードが挿入されたか確かめる
+SELECT * FROM weather;
+
+
+これらのステップを実行することで、Tinkerを使用してデータベースのレコードを操作することができます。質問があれば教えてください。
+
+
+
+ERROR : 28℃が文字化けしている
+はい、`28°C`の文字が文字化けしています。これは、文字エンコーディングの問題が原因です。
+
+### 文字化けの解決方法
+以下の方法で文字化けを防ぐことができます。
+
+SHOW VARIABLES LIKE 'character_set_database'; はMySQLコマンドであり、MySQLシェル内で実行する必要があります。まず、MySQLシェルに接続してからコマンドを実行してください。
+
+####MySQLのrootユーザーに接続
+まず、MySQLrootユーザーに接続します。以下のコマンドをターミナルで実行してください。
+./vendor/bin/sail mysql -u root -p
+
+### 方法 1: データベースの文字セットを確認・設定
+MySQLデータベースの文字セットと照合順序が適切に設定されているか確認します。
+
+現在、rootユーザーでパスワードなしでログインできているようです。この状態でデータベースとテーブルの文字セットを変更する操作を行いましょう。
+
+### データベースの文字セットをutf8mb4に設定
+
+まず、データベースの名前を確認してください。その後、以下のコマンドを使用してデータベースの文字セットを変更します。ここでは、データベース名を`your_database_name`として例示します。実際のデータベース名に置き換えてください。
+
+##### データベースネームの確認
+Laravelプロジェクトのルートディレクトリにある .env ファイルを開きます。このファイルにはデータベースの接続情報が記載されています。
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel <-
+DB_USERNAME=sail
+DB_PASSWORD=password
+DB_DATABASE の値があなたのデータベース名です。
+
+ALTER DATABASE laravel CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+次に、使用するデータベースを選択します。
+USE laravel;
+
+
+そして、テーブルの文字セットを変更します。
+ALTER TABLE weather CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+### Laravelの設定
+
+次に、Laravelのデフォルト文字セットをutf8mb4に設定します。`.env`ファイルを開き、以下のように設定します。
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=sail
+DB_PASSWORD=your_password
+DB_CHARSET=utf8mb4
+DB_COLLATION=utf8mb4_unicode_ci
+```
+
+### 既存データの修正
+
+Tinkerを使用して既存のレコードを修正します。
+
+```sh
+./vendor/bin/sail tinker
+```
+
+```php
+>>> $weather = App\Models\Weather::find(1);
+>>> $weather->temperature = '28°C';
+>>> $weather->save();
+```
+
+### まとめ
+
+これで文字化けの問題が解決するはずです。データベースとテーブルの文字セットが適切に設定され、Laravelの設定も更新されていることを確認してください。再度試してみてください。質問があれば教えてください。
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+GET と POST メソッドの違い
+
+POSTとGETは、HTTPプロトコルで使用される2つの異なるリクエストメソッドです。それぞれの役割と違いを説明します。
+
+### GETメソッド
+
+1. **役割**:
+   - GETメソッドは、サーバーからデータを取得するために使用されます。通常、ウェブページの読み込みやデータの検索に使用されます。
+
+2. **特徴**:
+   - **URLにデータを含む**: GETリクエストのデータはURLのクエリ文字列として送信されます。例: `http://example.com/search?query=keyword`
+   - **データの制限**: URLの長さには制限があります。一般的に、GETリクエストで送信できるデータの量は制限されます。
+   - **キャッシュ可能**: GETリクエストはブラウザによってキャッシュされることが多いです。
+   - **ブックマーク可能**: GETリクエストのURLはブックマークとして保存できます。
+
+3. **用途**:
+   - データの取得や表示
+   - リソースの参照
+
+### POSTメソッド
+
+1. **役割**:
+   - POSTメソッドは、サーバーにデータを送信するために使用されます。通常、フォームの送信やデータのアップロードに使用されます。
+
+2. **特徴**:
+   - **データはリクエストボディに含まれる**: POSTリクエストのデータはURLではなく、HTTPリクエストのボディ部分に含まれます。
+   - **データ量の制限が少ない**: URLの制限がないため、GETよりも大量のデータを送信できます。
+   - **キャッシュされない**: POSTリクエストは通常、ブラウザによってキャッシュされません。
+   - **ブックマーク不可**: POSTリクエストのURLはブックマークできません。
+
+3. **用途**:
+   - データの送信
+   - フォームの送信
+   - データのアップロード
+   - サーバー側での処理を伴うアクション
+
+### 例
+
+#### GETリクエストの例
+検索フォームで検索キーワードを送信する場合、GETリクエストが使われます。
+
+```html
+<form action="/search" method="GET">
+    <input type="text" name="query" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
+```
+
+#### POSTリクエストの例
+ユーザー登録フォームでデータを送信する場合、POSTリクエストが使われます。
+
+```html
+<form action="/register" method="POST">
+    @csrf
+    <input type="text" name="username" placeholder="Username">
+    <input type="password" name="password" placeholder="Password">
+    <button type="submit">Register</button>
+</form>
+```
+
+### 違いのまとめ
+
+- **GET**: データの取得、URLにデータを含む、キャッシュ可能、ブックマーク可能。
+- **POST**: データの送信、リクエストボディにデータを含む、キャッシュ不可、ブックマーク不可。
+
+これらの違いを理解することで、適切な場面で適切なリクエストメソッドを選択することができます。
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+CSSファイル OR HTML内にCSS
+
+CSSファイルにスタイルを記述する方法
+利点:
+	1.	一元管理: すべてのスタイルを一箇所で管理できるため、変更が容易。
+	2.	再利用性: 同じスタイルを複数のHTMLファイルで使用できる。
+	3.	保守性: HTMLとCSSが分離されているため、コードが読みやすく、保守がしやすい。
+	4.	パフォーマンス: ブラウザがCSSファイルをキャッシュするため、ページの読み込みが速くなる。
+
+
+HTML内にスタイルを直接記述する方法
+利点:
+	1.	簡単な変更: 一時的にスタイルを変更したい場合に便利。
+	2.	独立性: 特定のページや要素にのみ適用するスタイルを記述する際に便利。
+欠点:
+	1.	管理の複雑化: 複数のHTMLファイルにスタイルが分散するため、変更や保守が難しくなる。
+	2.	コードの冗長化: 同じスタイルを複数の場所に記述する必要があるため、コードが冗長になる。
+	3.	パフォーマンスの低下: ブラウザがスタイルをキャッシュしないため、ページの読み込みが遅くなることがある。

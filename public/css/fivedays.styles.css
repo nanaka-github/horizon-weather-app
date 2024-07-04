@@ -1,0 +1,144 @@
+/* 全体のスタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/Pasted Graphic.png'); /* 3D背景画像のパス */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #333;
+}
+
+header {
+    background-color: #85c2c3; /* 青っぽい色に変更 */
+    color: white;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 1em;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.user-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* 検索バーのスタイル */
+.search-bar {
+    margin-top: 1em;
+    display: flex;
+}
+
+.search-bar input[type="text"] {
+    width: 500px; /* 幅を広げる */
+    padding: 10px;
+    border: 1px solid #85c2c3; /* 青っぽい色に変更 */
+    border-radius: 5px 0 0 5px;
+    box-sizing: border-box; /* パディングを含めて幅を計算 */
+}
+
+.search-bar button {
+    padding: 10px 20px; /* パディングを調整 */
+    border: none;
+    background-color: #85c2c3; /* 青っぽい色に変更 */
+    color: white;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    font-weight: bold;
+}
+
+/* メインセクションのスタイル */
+main {
+    display: flex;
+    padding: 2em;
+}
+
+.block {
+    flex: 3;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1.5em;
+    margin-right: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.block h1 { /*の5日間の天気予報*/
+    margin-top: 0;
+    font-size: 2em;
+    color: #85c2c3; /* 青っぽい色に変更 */
+}
+
+.forecast {
+    background-color: #f0f0f0;
+    margin-bottom: 1em;
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.forecast p {
+    margin: 0.5em 0;
+}
+
+.forecast .date {
+    color: #85c2c3; /* 水色 */
+    font-weight: bold;
+}
+
+.forecast img {
+    width: 50px;  /* アイコンのサイズを調整 */
+    height: 50px;
+    margin-right: 10px;  /* アイコンとテキストの間にスペースを追加 */
+    vertical-align: middle;
+}
+
+/* フッターのスタイル */
+footer {
+    background-color: #85c2c3; /* 青っぽい色に変更 */
+    color: white;
+    padding: 1em;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin-right: 1em;
+}
+
+footer ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}

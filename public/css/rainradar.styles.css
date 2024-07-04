@@ -1,0 +1,208 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/Pasted Graphic.png'); /* 3D背景画像のパス */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #333;
+}
+
+header {
+    background-color: #85c2c3; /* 青っぽい色に変更 */
+    color: white;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* アイコンの位置 */
+.weather-info {
+    display: flex;
+    align-items: center;
+}
+
+.weather-icon {/* テキスト */
+    display: flex;
+    align-items: center;
+    margin-right: 1em; /* 必要に応じて調整 */
+}
+
+.weather-icon i {/* アイコン */
+    font-size: 3.5em; /* アイコンサイズ */
+    margin-right: 0.5em; /* アイコンとテキストの間のスペースを調整 */
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 色の定義 */
+i.sun {
+    color: #FFA500; /* オレンジ色 */
+}
+
+i.cloud {
+    color: #B0C4DE; /* ライトスチールブルー */
+}
+
+/* 天気アイコンの色 */
+.sun { color: #FFA500; } /* オレンジ色 */
+.cloud-sun { color: #cf9c65; } /* 所により曇りの色 */
+.cloud { color: #7b8695; } /* 曇りの色 */
+.cloud-sun-rain { color: #f1e536; } /* 所により雨の色 */
+.cloud-rain { color: #5dade2; } /* 弱い雨の色 */
+.cloud-showers-heavy { color: #2874a6; } /* 強い雨の色 */
+.bolt { color: #fbd38d; } /* 雷の色 */
+.snowflake { color: #63b3ed; } /* 雪の色 */
+
+
+/*ヘッダー　nav */
+header .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 1em;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.user-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    display: flex;
+    padding: 2em;
+}
+
+.block {
+    flex: 3;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1.5em;
+    margin-right: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.block h1 {
+    margin-top: 0;
+    font-size: 2em;
+    color: #85c2c3; /* 青っぽい色に変更 */
+}
+
+.weather-info {
+    display: flex;
+    align-items: center;
+}
+
+.weather-info .temperature {
+    font-size: 2.5em;
+    margin-right: 1em;
+    color: #85c2c3; /* 青っぽい色に変更 */
+}
+
+.weather-info .weather-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+.weather-info .details {
+    margin-left: 1em;
+    font-size: 1.1em;
+    color: #85c2c3; /* 青っぽい色に変更 */
+}
+
+.search-bar {
+    margin-top: 1em;
+    display: flex;
+}
+
+/* 検索バーのスタイル */
+.search-bar input[type="text"] {
+    width: 500px; /* 幅を広げる */
+    padding: 10px;
+    border: 1px solid #85c2c3; /* 青っぽい色に変更 */
+    border-radius: 5px 0 0 5px;
+    box-sizing: border-box; /* パディングを含めて幅を計算 */
+}
+
+.search-bar button {
+    padding: 10px 20px; /* パディングを調整 */
+    border: none;
+    background-color: #85c2c3; /* 青っぽい色に変更 */
+    color: white;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    font-weight: bold;
+}
+
+aside {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.news, .favorite-locations {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1.5em;
+    margin-bottom: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.news ul, .favorite-locations ul {
+    list-style: none;
+    padding: 0;
+}
+
+.news li, .favorite-locations li {
+    font-size: 1.0em;
+    color: #85c2c3; /* 青っぽい色に変更 */
+    margin-bottom: 1em;
+}
+
+footer {
+    background-color: #85c2c3; /* 青っぽい色に変更 */
+    color: white;
+    padding: 1em;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin-right: 1em;
+}
+
+footer ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
